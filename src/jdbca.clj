@@ -19,8 +19,8 @@
 (defn query
   "A deferred of a stream of rows from `db` for the java.jdbc query described by
   `q`. The deferred is realized with an error if the query does not succeed.
-  Optionally takes a custom `:executor`, transducer `:xform`, and stream
-  `:buffer-size`."
+  Optionally takes a custom `:executor`, transducer `:xform`, and a
+  `:buffer-size` for the returned stream."
   ([db q]
    (query db q nil))
   ([db q {:keys [executor buffer-size xform]
