@@ -1,5 +1,8 @@
 (ns jdbca.dirigiste
-  "A clojure interface to dirigiste, copied from Zach Tellman's aleph (https://github.com/ztellman/aleph) pending a possible extraction of this code to a separate project: https://github.com/ztellman/aleph/issues/156. This code is from commit f7ab504d: https://github.com/ztellman/aleph/blob/f7ab504d48f86ffe51e91d91803cb93617552eeb/src/aleph/flow.clj."
+  "A clojure interface to dirigiste, copied from Zach Tellman's aleph
+  (https://github.com/ztellman/aleph) pending a possible extraction of the code
+  to a separate project: https://github.com/ztellman/aleph/issues/156. The
+  following functions are from src/aleph/flow.clj in commit f7ab504d."
   (:require
     [manifold.deferred :as d])
   (:import
