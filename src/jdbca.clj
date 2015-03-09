@@ -17,18 +17,18 @@
 ;; public API
 
 (defn query
-  "A deferred of a stream of rows from `db` for the java.jdbc query described by
-  `q`. The deferred is realized with an error if the query does not succeed.
-  Optionally takes a custom `:executor`, transducer `:xform`, and a
+  "A deferred yielding a stream of rows from `db` for the java.jdbc query
+  described by `q`. The deferred is realized with an error if the query does not
+  succeed. Optionally takes a custom `:executor`, and a `:transducer` and
   `:buffer-size` for the returned stream."
   ([db q]
    (query db q nil))
-  ([db q {:keys [executor buffer-size xform]
+  ([db q {:keys [executor buffer-size transducer]
           :or {executor default-executor
                buffer-size default-rows-buffer-size
-               xform nil}}]
+               transducer nil}}]
    (let [d (d/deferred)
-         s (s/stream buffer-size xform executor)]
+         s (s/stream buffer-size transducer executor)]
      (.execute ^Executor executor
        (fn []
          (try

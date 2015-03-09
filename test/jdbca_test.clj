@@ -27,7 +27,7 @@
         "create table things (name varchar)"
         "insert into things (name) values ('a'), ('b')")
       (is (= (->> (j/query conn "select * from things"
-                    {:xform (map #(str (:name %) "!"))})
+                    {:transducer (map #(str (:name %) "!"))})
                deref
                s/stream->seq)
              '("a!" "b!"))))))
