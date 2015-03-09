@@ -28,7 +28,7 @@
                buffer-size default-rows-buffer-size
                transducer nil}}]
    (let [d (d/deferred)
-         s (s/stream buffer-size transducer executor)]
+         s (s/stream buffer-size transducer)]
      (.execute ^Executor executor
        (fn []
          (try
