@@ -29,6 +29,10 @@ An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold)
 ;=> << "abe" >>
 ```
 
+## Caveats
+
+This project currently only contains the JDBC functionality I need in another project. Contributions are welcome.
+
 ## License
 
 Copyright © 2015 Brian Schroeder
