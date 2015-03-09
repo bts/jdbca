@@ -1,4 +1,4 @@
-(defproject jdbca "0.1.0"
+(defproject jdbca "0.1.1-SNAPSHOT"
   :description "An asynchrous interface to java.jdbc."
   :url "http://github.com/bts/jdbca"
   :license {:name "MIT License"
