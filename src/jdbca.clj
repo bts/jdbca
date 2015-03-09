@@ -34,7 +34,7 @@
          (try
            (jdbc/query db q
              :result-set-fn (fn [rows]
-                              (d/success! d s)
+                              (d/success! d (s/source-only s))
                               (doseq [row rows]
                                 (s/put! s row))
                               (s/close! s)))
