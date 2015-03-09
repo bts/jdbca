@@ -10,14 +10,23 @@ An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold)
 
 ```clojure
 (require '[jdbca :as j])
+(require '[manifold.stream :as s])
 
-(def jdbc-spec {:classname "org.postgresql.Driver"
-                :subprotocol "postgresql"
-                :subname "//localhost:5432/test"
-                :user "user"
-                :password ""})
+;; db would be a connection pool in production code
+(def db {:subprotocol "postgresql"
+         :subname "//localhost:5432/bts"
+         :user "bts"
+         :password ""})
 
-(def rows (j/query jdbc-spec ["select * from dogs where name = ?" "abe"]))
+(-> (j/query db ["select *, pg_sleep(1) from dogs where name = ?" "abe"])
+  (d/chain
+    (partial s/map :name)
+    s/take!)
+  (d/catch
+    (fn [e] "caught: " e)))
+#=> << … >>
+*1
+#=> << "abe" >>
 ```
 
 ## License
