@@ -24,9 +24,9 @@ An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold)
     s/take!)
   (d/catch
     (fn [e] "caught: " e)))
-#=> << … >>
+;=> << … >>
 *1
-#=> << "abe" >>
+;=> << "abe" >>
 ```
 
 ## License
