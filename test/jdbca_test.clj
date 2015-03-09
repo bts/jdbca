@@ -20,4 +20,14 @@
                deref
                (s/map :name)
                s/stream->seq)
-             '("a" "b"))))))
+             '("a" "b")))))
+  (testing "optional transducer"
+    (jdbc/with-db-connection [conn db]
+      (jdbc/db-do-commands conn
+        "create table things (name varchar)"
+        "insert into things (name) values ('a'), ('b')")
+      (is (= (->> (j/query conn "select * from things"
+                    {:xform (map #(str (:name %) "!"))})
+               deref
+               s/stream->seq)
+             '("a!" "b!"))))))
