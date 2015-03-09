@@ -17,10 +17,10 @@
 ;; public API
 
 (defn query
-  "A deferred yielding a stream of rows from `db` for the java.jdbc query
-  described by `q`. The deferred is realized with an error if the query does not
-  succeed. Optionally takes a custom `:executor`, and a `:transducer` and
-  `:buffer-size` for the returned stream."
+  "A deferred yielding a stream of rows from `db` for the java.jdbc query `q`.
+  The deferred is realized with an error if the query does not succeed.
+  Optionally takes a custom `:executor`, and a `:transducer` and `:buffer-size`
+  for the returned stream."
   ([db q]
    (query db q nil))
   ([db q {:keys [executor buffer-size transducer]
