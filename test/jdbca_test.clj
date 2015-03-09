@@ -13,5 +13,11 @@
     (is (thrown? Exception @(j/query db "select * from nonexistent_table"))))
   (testing "successful query"
     (jdbc/with-db-connection [conn db]
-      (jdbc/db-do-commands conn "create table things")
-      (is (empty? (s/stream->seq @(j/query conn "select * from things")))))))
+      (jdbc/db-do-commands conn
+        "create table things (name varchar)"
+        "insert into things (name) values ('a'), ('b')")
+      (is (= (->> (j/query conn "select * from things")
+               deref
+               (s/map :name)
+               s/stream->seq)
+             '("a" "b"))))))
