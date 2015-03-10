@@ -41,3 +41,22 @@
            (catch Exception e
              (d/error! d e)))))
      d)))
+
+(defn execute!
+  "Issues a SQL statement described by the vector `stmt` to `db`, returning a
+  deferred sequence of update counts, one for each param java.jdbc param group.
+  Optionally takes a custom `:executor`."
+  ([db stmt]
+   (execute! db stmt nil))
+  ([db stmt {:keys [executor]
+             :or {executor default-executor}}]
+     (let [d (d/deferred)]
+       (.execute ^Executor executor
+         (fn []
+           (try
+             ;; we diverge from java.jdbc here; if the user wants a transaction
+             ;; then they should express that explicitly.
+             (d/success! d (jdbc/execute! db stmt :transaction? false))
+             (catch Exception e
+               (d/error! d e)))))
+       d)))

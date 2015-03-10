@@ -26,8 +26,16 @@
       (jdbc/db-do-commands conn
         "create table things (name varchar)"
         "insert into things (name) values ('a'), ('b')")
-      (is (= (->> (j/query conn "select * from things"
-                    {:transducer (map #(str (:name %) "!"))})
-               deref
-               s/stream->seq)
+      (is (= (s/stream->seq @(j/query conn "select * from things"
+               {:transducer (map #(str (:name %) "!"))}))
              '("a!" "b!"))))))
+
+(deftest test-execute!
+  (let [stmt ["insert into things (name) values (?)" "abc"]]
+    (testing "failed execution"
+      (is (thrown? Exception @(j/execute! db stmt))))
+    (testing "successful execution"
+      (jdbc/with-db-connection [conn db]
+        (jdbc/db-do-commands conn "create table things (name varchar)")
+        (is (= @(j/execute! conn stmt)
+               '(1)))))))
