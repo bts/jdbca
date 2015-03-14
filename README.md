@@ -1,6 +1,6 @@
 # jdbca
 
-An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold) interface to the synchronous [java.jdbc](https://github.com/clojure/java.jdbc) using a [dirigiste](https://github.com/ztellman/dirigiste) [thread pool](http://ideolalia.com/dirigiste/io/aleph/dirigiste/Executor.html).
+An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold) interface to the synchronous [java.jdbc](https://github.com/clojure/java.jdbc) using a [dirigiste](https://github.com/ztellman/dirigiste) [thread pool](http://ideolalia.com/dirigiste/io/aleph/dirigiste/Executor.html). This library is [not yet ready](#caveats) for serious use.
 
 ```clojure
 [jdbca "0.1.0-SNAPSHOT"]
@@ -42,6 +42,8 @@ Next on the list is transaction support. I'm currently considering a faux-monadi
        _ (j/commit!)]
   (concat rs1 rs1))
 ```
+
+To simplify transaction semantics, I think the current `j/query` function should probably be changed to just return a deferred yielding a clojure sequence instead of a manifold stream.
 
 ## License
 
