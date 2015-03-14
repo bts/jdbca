@@ -33,6 +33,16 @@ An **in-progress** asynchronous [manifold](https://github.com/ztellman/manifold)
 
 This project currently only contains the JDBC functionality I need in another project. Contributions are welcome.
 
+Next on the list is transaction support. I'm currently considering a faux-monadic interface that's a blend of  [`let-flow`](https://github.com/ztellman/manifold/blob/master/docs/deferred.md#let-flow) and postgres.async's [`dosql`](https://github.com/alaisi/postgres.async#composition), where each of the bindings will be made sequentially, and any failure will result in the entire form realizing an error-deferred:
+
+```clojure
+(j/do [tx (j/begin {:isolation :serializable})
+       rs1 (j/execute! tx ["insert into dogs (name) values (?)" "new dog"])
+       rs2 (j/execute! tx ["insert into cats (name) values (?)" "new cat"])
+       _ (j/commit!)]
+  (concat rs1 rs1))
+```
+
 ## License
 
 Copyright © 2015 Brian Schroeder
